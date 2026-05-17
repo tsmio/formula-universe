@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<!--
+============================================================
+Formula Universe
+Created by Tahmina Sadia Mahmud Rodshi
+
+GitHub:
+https://github.com/tsmio/formula-universe
+
+Description:
+An interactive offline-first formula reference for
+students, engineers, developers, analysts, and educators.
+
+This project explains formulas in plain English:
+- what they are
+- when to use them
+- why they matter in real life
+
+Tech:
+HTML, CSS, Vanilla JavaScript
+
+License:
+Licensed under CC BY-NC-ND 4.0 
+Full license text available in the LICENSE file.
+https://github.com/tsmio/formula-universe/blob/main/LICENSE
+
+PLEASE RETAIN ATTRIBUTION WHEN SHARING OR MODIFYING.
+
+© 2026 Tahmina Sadia Mahmud Rodshi
+============================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Tahmina Sadia Mahmud Rodshi">
+<!-- 
+  PROPRIETARY NOTICE: 
+  This logic and educational content was developed by Tahmina Sadia Mahmud Rodshi.
+  Unauthorized removal of this attribution is a violation of the license.
+-->
+<meta name="copyright" content="© 2026 Tahmina Sadia Mahmud Rodshi. All rights reserved.">
+<meta name="description" content="Interactive offline-first formula reference covering mathematics, machine learning, statistics, finance, engineering, computer science, and game development in plain English.">
+<meta name="keywords" content="formulas, mathematics, machine learning, statistics, finance, engineering, game development, computer science, education, formula reference, students">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Formula Universe">
+<meta property="og:description" content="Interactive searchable formula reference for students and engineers.">
+<meta property="og:type" content="website">
+<title>Formula Universe - Every Formula You'll Ever Need</title>
+<style>
+
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg:        #0d0f11;
+    --surface:   #13161a;
+    --surface2:  #1c2027;
+    --border:    #2a2f38;
+    --accent:    #f0a500;
+    --accent2:   #3ecfcf;
+    --accent3:   #e05c7a;
+    --text:      #e2e8f0;
+    --muted:     #8a95a3;
+    --formula-bg:#0a1628;
+    --radius:    10px;
+    --card-w:    340px;
+
+    /* category colors */
+    --c-math:    #f0a500;
+    --c-ml:      #3ecfcf;
+    --c-game:    #7c6df0;
+    --c-finance: #3acf7a;
+    --c-stats:   #e05c7a;
+    --c-crypto:  #f06a00;
+    --c-cs:      #59b0f0;
+    --c-alevel:  #c47af0;
+    --c-uni:     #f0cf50;
+    --c-bba:     #5fd9a0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,15,17,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 24px 14px;
+  }
+
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .brand h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.7rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  .brand h1 span { color: var(--accent); }
+
+  .brand-sub {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* SEARCH */
+  .search-wrap {
+    position: relative;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    max-width: 560px; /* Match your search width */
+  }
+
+  .search-wrap svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    pointer-events: none;
+  }
+
+  #search {
+    width: 100%;
+    max-width: 560px;
+    padding: 10px 40px 10px 42px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 0.95rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  #search::placeholder { color: var(--muted); }
+  #search:focus { border-color: var(--accent); }
+
+  #search-clear {
+  display: none;
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+  z-index: 10; 
+}
+
+#search-clear:hover {
+  color: var(--accent);
+}
+
+  /* FILTERS */
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .filter-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-right: 4px;
+  }
+
+  .filter-btn {
+    padding: 5px 13px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-family: 'DM Mono', monospace;
+    cursor: pointer;
+    transition: all 0.18s;
+    white-space: nowrap;
+  }
+
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 600; }
+  .filter-btn[data-cat="all"].active { background: var(--text); border-color: var(--text); color: #000; }
+
+  /* STATS BAR */
+  #stats-bar {
+    max-width: 1400px;
+    margin: 14px auto 0;
+    padding: 0 24px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* MAIN GRID */
+  main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  #grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--card-w), 1fr));
+    gap: 18px;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: border-color 0.2s, transform 0.18s, box-shadow 0.2s;
+    animation: fadeIn 0.25s ease both;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+
+  .card:hover {
+    border-color: #3a4150;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+  }
+
+  /* category stripe colors */
+  .card[data-cat="core-math"]::before    { background: var(--c-math); }
+  .card[data-cat="machine-learning"]::before { background: var(--c-ml); }
+  .card[data-cat="game-dev"]::before     { background: var(--c-game); }
+  .card[data-cat="finance"]::before      { background: var(--c-finance); }
+  .card[data-cat="statistics"]::before   { background: var(--c-stats); }
+  .card[data-cat="crypto"]::before       { background: var(--c-crypto); }
+  .card[data-cat="cs-algorithms"]::before { background: var(--c-cs); }
+  .card[data-cat="a-level"]::before      { background: var(--c-alevel); }
+  .card[data-cat="university-cs"]::before { background: var(--c-uni); }
+  .card[data-cat="university-bba"]::before { background: var(--c-bba); }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .card-name {
+    font-weight: 600;
+    font-size: 0.97rem;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .cat-badge {
+    font-size: 0.62rem;
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .card[data-cat="core-math"]    .cat-badge { background: rgba(240,165,0,0.15);   color: var(--c-math); }
+  .card[data-cat="machine-learning"] .cat-badge { background: rgba(62,207,207,0.12); color: var(--c-ml); }
+  .card[data-cat="game-dev"]     .cat-badge { background: rgba(124,109,240,0.15); color: var(--c-game); }
+  .card[data-cat="finance"]      .cat-badge { background: rgba(58,207,122,0.12);  color: var(--c-finance); }
+  .card[data-cat="statistics"]   .cat-badge { background: rgba(224,92,122,0.12);  color: var(--c-stats); }
+  .card[data-cat="crypto"]       .cat-badge { background: rgba(240,106,0,0.15);   color: var(--c-crypto); }
+  .card[data-cat="cs-algorithms"] .cat-badge { background: rgba(89,176,240,0.12); color: var(--c-cs); }
+  .card[data-cat="a-level"]      .cat-badge { background: rgba(196,122,240,0.12); color: var(--c-alevel); }
+  .card[data-cat="university-cs"] .cat-badge { background: rgba(240,207,80,0.12); color: var(--c-uni); }
+  .card[data-cat="university-bba"] .cat-badge { background: rgba(95,217,160,0.12); color: var(--c-bba); }
+
+  /* formula display */
+  .formula-box {
+    background: var(--formula-bg);
+    border: 1px solid #1e2d45;
+    border-radius: 7px;
+    padding: 12px 16px;
+    font-family: 'DM Mono', 'Courier New', monospace;
+    font-size: 0.88rem;
+    color: var(--accent);
+    line-height: 1.8;
+    letter-spacing: 0.02em;
+    word-break: break-word;
+  }
+
+  .formula-box .formula-line {
+    display: block;
+    color: var(--accent);
+  }
+
+  .formula-box .formula-line + .formula-line {
+    color: #c07800;
+    font-size: 0.8rem;
+    margin-top: 2px;
+  }
+
+  /* description sections */
+  .desc-section { display: flex; flex-direction: column; gap: 6px; }
+
+  .desc-label {
+    font-size: 0.65rem;
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+
+  .desc-text {
+    font-size: 0.83rem;
+    color: #b0bec5;
+    line-height: 1.55;
+  }
+
+  .example-box {
+    background: rgba(62,207,207,0.06);
+    border-left: 2px solid var(--accent2);
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.78rem;
+    color: var(--accent2);
+    font-family: 'DM Mono', monospace;
+    line-height: 1.5;
+    word-break: break-word;
+  }
+
+  /* hidden */
+  .card.hidden { display: none; }
+
+  /* no results */
+  #no-results {
+    display: none;
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 1rem;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 40px 24px;
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-family: 'DM Mono', monospace;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  footer a { color: var(--accent); text-decoration: none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    :root { --card-w: 100%; }
+    header { padding: 14px 16px 12px; }
+    main { padding: 16px; }
+    #grid { gap: 14px; }
+    .brand h1 { font-size: 1.3rem; }
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <h1>Formula <span>Universe</span></h1>
+      <span class="brand-sub">Every formula. Every discipline. Plain English.</span>
+    </div>
+
+    <div class="search-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" id="search" placeholder="Search any formula, keyword, or concept…" autocomplete="off" spellcheck="false">
+        <button id="search-clear" type="button" title="Clear search">&times;</button>
+    </div>
+
+    <div class="filters">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-btn active" data-cat="all">All</button>
+      <button class="filter-btn" data-cat="core-math">Core Math</button>
+      <button class="filter-btn" data-cat="a-level">A-Level / O-Level</button>
+      <button class="filter-btn" data-cat="statistics">Statistics</button>
+      <button class="filter-btn" data-cat="machine-learning">Machine Learning</button>
+      <button class="filter-btn" data-cat="cs-algorithms">CS / Algorithms</button>
+      <button class="filter-btn" data-cat="game-dev">Game Dev</button>
+      <button class="filter-btn" data-cat="finance">Finance / Fintech</button>
+      <button class="filter-btn" data-cat="university-cs">University CS/Eng</button>
+      <button class="filter-btn" data-cat="university-bba">University BBA/Econ</button>
+      <button class="filter-btn" data-cat="crypto">Crypto / Security</button>
+    </div>
+  </div>
+</header>
+
+<div id="stats-bar"></div>
+
+<main>
+  <div id="grid">
+    <div id="no-results">No formulas found. Try a different keyword.</div>
+  </div>
+</main>
+
+<footer>
+  Formula Universe - Open source formula reference for students, teachers, scientists &amp; engineers everywhere.<br>
+  Built and designed by <a href="https://github.com/tsmio" target="_blank">Tahmina Sadia Mahmud Rodshi</a> · <a href="https://github.com/tsmio/formula-universe" target="_blank">Contribute on GitHub</a>
+</footer>
+
+<script>
+console.log("%cFormula Universe %cCreated by Tahmina Sadia Mahmud Rodshi", 
+            "color: #f0a500; font-size: 20px; font-weight: bold;", 
+            "color: #8a95a3; font-size: 12px;");
+
+const FORMULAS = [
+  // CORE MATH
+  {
+    name: "Linear Equation (Slope-Intercept)",
+    cat: "core-math",
+    keywords: "line slope intercept gradient straight",
+    formula: ["y = mx + b"],
+    what: "Describes any straight line. m = how steep the line is (slope). b = where it crosses the y-axis.",
+    when: "Whenever you need to model a relationship that grows or shrinks at a constant rate — price per unit, speed, salary per hour.",
+    example: "y = 3x + 5 → for every 1 unit of x, y increases by 3. At x=0, y=5."
+  },
+  {
+    name: "Quadratic Formula",
+    cat: "core-math",
+    keywords: "quadratic roots parabola ax2 bx c discriminant",
+    formula: ["x = (−b ± √(b² − 4ac)) / 2a"],
+    what: "Finds the x-values where a curved (parabola) line crosses zero. Solves ax² + bx + c = 0.",
+    when: "When you have a squared variable and need to find where something equals zero — trajectory peaks, break-even points.",
+    example: "x² − 5x + 6 = 0 → x = 2 or x = 3."
+  },
+  {
+    name: "Discriminant",
+    cat: "core-math",
+    keywords: "discriminant roots nature quadratic real",
+    formula: ["Δ = b² − 4ac", "Δ > 0 → 2 real roots | Δ = 0 → 1 root | Δ < 0 → no real roots"],
+    what: "Tells you HOW MANY solutions a quadratic has, before doing full calculation.",
+    when: "Quick check: does this equation have solutions at all?",
+    example: "b²−4ac = −3 → no real solution exists."
+  },
+  {
+    name: "Distance Formula (2D)",
+    cat: "core-math",
+    keywords: "distance two points euclidean 2d coordinate",
+    formula: ["d = √((x₂−x₁)² + (y₂−y₁)²)"],
+    what: "Straight-line distance between two points on a flat plane. Pythagoras applied to coordinates.",
+    when: "Finding how far apart two things are: cities on a map, objects in a game, data points in ML.",
+    example: "Points (1,2) and (4,6) → d = √(9+16) = 5."
+  },
+  {
+    name: "Distance Formula (3D)",
+    cat: "core-math",
+    keywords: "distance 3d three dimensional space points",
+    formula: ["d = √((x₂−x₁)² + (y₂−y₁)² + (z₂−z₁)²)"],
+    what: "Same as 2D distance but adds a third dimension (depth).",
+    when: "3D game engines, spatial queries, collision detection in 3D worlds.",
+    example: "Points (0,0,0) and (1,2,2) → d = √(1+4+4) = 3."
+  },
+  {
+    name: "Midpoint Formula",
+    cat: "core-math",
+    keywords: "midpoint middle average two points",
+    formula: ["M = ((x₁+x₂)/2 , (y₁+y₂)/2)"],
+    what: "Finds the exact centre point between two coordinates.",
+    when: "Centering UI elements, finding midpoints of map routes, averaging positions.",
+    example: "(0,0) and (4,6) → midpoint = (2,3)."
+  },
+  {
+    name: "Laws of Indices (Exponent Rules)",
+    cat: "core-math",
+    keywords: "exponent power indices rules multiply divide",
+    formula: ["aᵐ × aⁿ = aᵐ⁺ⁿ", "aᵐ ÷ aⁿ = aᵐ⁻ⁿ", "(aᵐ)ⁿ = aᵐⁿ", "a⁰ = 1  |  a⁻ⁿ = 1/aⁿ"],
+    what: "Rules for multiplying and dividing numbers with powers.",
+    when: "Simplifying expressions, understanding Big-O notation (2ⁿ), working with growth rates.",
+    example: "2³ × 2⁴ = 2⁷ = 128."
+  },
+  {
+    name: "Logarithm Rules",
+    cat: "core-math",
+    keywords: "logarithm log ln natural base rules",
+    formula: ["log(ab) = log a + log b", "log(a/b) = log a − log b", "log(aⁿ) = n·log a", "logₐb = log b / log a"],
+    what: "Logarithm is the inverse of exponentiation — it asks 'what power gives me this number?'",
+    when: "Measuring scales (decibels, pH, earthquake magnitude), ML loss functions, algorithmic complexity analysis.",
+    example: "log₂(8) = 3 because 2³ = 8."
+  },
+  {
+    name: "Pythagorean Theorem",
+    cat: "core-math",
+    keywords: "pythagoras right angle triangle hypotenuse sides",
+    formula: ["a² + b² = c²", "c = √(a² + b²)"],
+    what: "In a right-angled triangle, the square of the hypotenuse equals sum of squares of other two sides.",
+    when: "Any time you need to find a missing side of a right triangle. Foundation of the distance formula.",
+    example: "Sides 3 and 4 → hypotenuse = √(9+16) = 5."
+  },
+  {
+    name: "Circle: Area & Circumference",
+    cat: "core-math",
+    keywords: "circle area circumference radius diameter pi",
+    formula: ["Area = πr²", "Circumference = 2πr = πd", "π ≈ 3.14159"],
+    what: "Area = how much space inside a circle. Circumference = the perimeter (boundary length).",
+    when: "UI circular components, game hitboxes, geographic radius queries.",
+    example: "r=5 → Area = 78.5 units²,  Circumference = 31.4 units."
+  },
+  {
+    name: "Sum of Arithmetic Progression (AP)",
+    cat: "core-math",
+    keywords: "arithmetic progression series sum AP sequence",
+    formula: ["Sₙ = n/2 × (a + l)", "OR  Sₙ = n/2 × (2a + (n−1)d)", "nth term: aₙ = a + (n−1)d"],
+    what: "Sum of a sequence where each term increases by the same fixed amount (d = common difference).",
+    when: "Calculating total salary increments, summing equally spaced data, loop iteration analysis.",
+    example: "1+2+3+…+100 → n=100, a=1, l=100 → S = 50×101 = 5050."
+  },
+  {
+    name: "Sum of Geometric Progression (GP)",
+    cat: "core-math",
+    keywords: "geometric progression series sum GP ratio exponential",
+    formula: ["Sₙ = a(rⁿ − 1) / (r − 1)  for r ≠ 1", "S∞ = a / (1−r)  for |r| < 1 (infinite)"],
+    what: "Sum of a sequence where each term is multiplied by the same ratio r.",
+    when: "Compound growth, viral sharing calculations, infinite series in probability, loan repayments.",
+    example: "2, 6, 18, 54… (r=3, 4 terms) → S = 2(3⁴−1)/(3−1) = 80."
+  },
+  {
+    name: "Binomial Theorem",
+    cat: "core-math",
+    keywords: "binomial expansion theorem coefficient pascal combinations",
+    formula: ["(a + b)ⁿ = Σ C(n,k) · aⁿ⁻ᵏ · bᵏ  (k from 0 to n)", "C(n,k) = n! / (k!(n−k)!)"],
+    what: "Expands (a+b) raised to any power without multiplying it out repeatedly.",
+    when: "Probability calculations, polynomial expansions, approximation shortcuts in physics/finance.",
+    example: "(1+x)³ = 1 + 3x + 3x² + x³."
+  },
+  {
+    name: "Factorial",
+    cat: "core-math",
+    keywords: "factorial n! permutation combination counting",
+    formula: ["n! = n × (n−1) × (n−2) × … × 1", "0! = 1  (by definition)"],
+    what: "n! = total ways to arrange n distinct items.",
+    when: "Counting arrangements, permutations, probability denominators, combinatorics.",
+    example: "5! = 5×4×3×2×1 = 120."
+  },
+  {
+    name: "Permutations",
+    cat: "core-math",
+    keywords: "permutation arrangement order P(n,r) counting",
+    formula: ["P(n, r) = n! / (n − r)!"],
+    what: "Number of ordered arrangements of r items chosen from n. Order matters.",
+    when: "Password combinations, race finishing positions, ranking scenarios.",
+    example: "P(5,2) = 5!/3! = 20. (5 people, 2 positions, ordered)."
+  },
+  {
+    name: "Combinations",
+    cat: "core-math",
+    keywords: "combination choose selection C(n,r) unordered",
+    formula: ["C(n, r) = n! / (r! × (n−r)!)"],
+    what: "Number of ways to choose r items from n where order does NOT matter.",
+    when: "Lottery odds, selecting a team, choosing features, ML cross-validation splits.",
+    example: "C(5,2) = 10. (5 items, pick any 2, order doesn't matter)."
+  },
+
+  // A-LEVEL / O-LEVEL
+  {
+    name: "Trigonometry: SOH CAH TOA",
+    cat: "a-level",
+    keywords: "trigonometry sin cos tan sine cosine tangent right triangle angle",
+    formula: ["sin θ = Opposite / Hypotenuse", "cos θ = Adjacent / Hypotenuse", "tan θ = Opposite / Adjacent"],
+    what: "Relates angles to side lengths in right-angled triangles.",
+    when: "Game dev rotations, physics angles, signal processing, ML (periodic features).",
+    example: "θ=30°, hyp=10 → opposite = 10 × sin(30°) = 5."
+  },
+  {
+    name: "Sine Rule",
+    cat: "a-level",
+    keywords: "sine rule law sines triangle non-right angle",
+    formula: ["a / sin A = b / sin B = c / sin C"],
+    what: "For ANY triangle (not just right-angled), links each side to the sine of its opposite angle.",
+    when: "Finding missing angles or sides when you know some angles but no right angle exists.",
+    example: "a=7, A=60°, B=45° → b = 7×sin(45°)/sin(60°) ≈ 5.72."
+  },
+  {
+    name: "Cosine Rule",
+    cat: "a-level",
+    keywords: "cosine rule law cosines triangle non-right angle",
+    formula: ["c² = a² + b² − 2ab·cos C", "cos C = (a² + b² − c²) / (2ab)"],
+    what: "Generalization of Pythagoras for ANY triangle.",
+    when: "Finding a side when you know two sides and the included angle, or finding an angle from three sides.",
+    example: "a=5, b=7, C=60° → c² = 25+49−35 = 39, c ≈ 6.24."
+  },
+  {
+    name: "Trigonometric Identities",
+    cat: "a-level",
+    keywords: "trig identity sin cos tan pythagorean identity",
+    formula: ["sin²θ + cos²θ = 1", "tan θ = sin θ / cos θ", "1 + tan²θ = sec²θ", "sin(A±B) = sinA·cosB ± cosA·sinB", "cos(A±B) = cosA·cosB ∓ sinA·sinB"],
+    what: "Fundamental relationships between trig functions — always true for any angle.",
+    when: "Simplifying expressions, solving trig equations, signal analysis, game dev rotations.",
+    example: "Prove: (1−sin²x) = cos²x → uses sin²+cos²=1."
+  },
+  {
+    name: "Differentiation (Basic Derivative)",
+    cat: "a-level",
+    keywords: "derivative differentiation calculus rate change slope gradient",
+    formula: ["d/dx (xⁿ) = n·xⁿ⁻¹", "d/dx (constant) = 0", "d/dx (sin x) = cos x", "d/dx (eˣ) = eˣ", "d/dx (ln x) = 1/x"],
+    what: "Measures the instantaneous rate of change. The slope of a curve at any point.",
+    when: "Finding min/max of functions, gradient descent in ML, game physics velocity from position.",
+    example: "f(x)=x³ → f'(x)=3x². At x=2, slope=12."
+  },
+  {
+    name: "Chain Rule (Differentiation)",
+    cat: "a-level",
+    keywords: "chain rule derivative composite function differentiation",
+    formula: ["d/dx [f(g(x))] = f'(g(x)) · g'(x)"],
+    what: "Rule for differentiating a function inside another function (composite functions).",
+    when: "Neural network backpropagation uses this at its core. Any nested function derivative.",
+    example: "d/dx[sin(x²)] = cos(x²) · 2x."
+  },
+  {
+    name: "Product Rule (Differentiation)",
+    cat: "a-level",
+    keywords: "product rule derivative two functions multiply",
+    formula: ["d/dx [u·v] = u·v' + v·u'"],
+    what: "How to differentiate two functions multiplied together.",
+    when: "Backpropagation, physics equations, any time two changing quantities multiply.",
+    example: "d/dx[x²·sin(x)] = x²·cos(x) + 2x·sin(x)."
+  },
+  {
+    name: "Integration (Antiderivative)",
+    cat: "a-level",
+    keywords: "integral integration calculus area under curve antiderivative",
+    formula: ["∫xⁿ dx = xⁿ⁺¹/(n+1) + C  (n ≠ −1)", "∫eˣ dx = eˣ + C", "∫1/x dx = ln|x| + C", "∫cos x dx = sin x + C"],
+    what: "Reverse of differentiation. Finds total accumulated quantity (area under a curve).",
+    when: "Probability distributions (area = probability), physics (velocity → displacement), expected values in finance.",
+    example: "∫3x² dx = x³ + C."
+  },
+  {
+    name: "Definite Integral (Area Under Curve)",
+    cat: "a-level",
+    keywords: "definite integral area bounded region limits",
+    formula: ["∫[a to b] f(x) dx = F(b) − F(a)", "where F'(x) = f(x)"],
+    what: "Calculates exact area between a curve and the x-axis between two points.",
+    when: "Revenue/profit totals over time, probability (area = chance), signal energy calculations.",
+    example: "∫[0 to 3] x² dx = [x³/3] from 0 to 3 = 9."
+  },
+  {
+    name: "Logarithm to Exponential Conversion",
+    cat: "a-level",
+    keywords: "logarithm exponential convert inverse log base",
+    formula: ["logₐ(b) = c  ↔  aᶜ = b", "ln(x) = logₑ(x)  (natural log, e ≈ 2.718)"],
+    what: "Switching between log and exponential form — they're two sides of the same coin.",
+    when: "Solving equations with unknowns in exponents (e.g. compound interest, ML training loss).",
+    example: "log₂(32) = 5 because 2⁵ = 32."
+  },
+  {
+    name: "Vectors: Addition & Scalar Multiplication",
+    cat: "a-level",
+    keywords: "vector addition scalar multiply magnitude direction 2d 3d",
+    formula: ["A + B = (Ax+Bx, Ay+By)", "k·A = (k·Ax, k·Ay)", "|A| = √(Ax² + Ay²)"],
+    what: "Vectors represent direction + magnitude. Adding them combines displacements. Scaling stretches them.",
+    when: "Physics forces, game movement, ML weight updates, coordinate transformations.",
+    example: "A=(3,4), |A| = √(9+16) = 5."
+  },
+  {
+    name: "Normal Distribution (Bell Curve) — Properties",
+    cat: "a-level",
+    keywords: "normal distribution bell curve standard deviation mean 68 95",
+    formula: ["68% of data lies within ±1σ of mean", "95% within ±2σ", "99.7% within ±3σ", "z = (x − μ) / σ"],
+    what: "Most real-world data (heights, test scores, errors) clusters around a mean in this bell shape.",
+    when: "Grading on a curve, quality control, A/B test significance, detecting anomalies in fintech.",
+    example: "IQ: mean=100, σ=15. Score 130 → z = (130−100)/15 = 2 (top 2.5%)."
+  },
+  {
+    name: "Mechanics: SUVAT Equations",
+    cat: "a-level",
+    keywords: "suvat kinematics velocity acceleration displacement time mechanics",
+    formula: ["v = u + at", "s = ut + ½at²", "v² = u² + 2as", "s = ½(u+v)t"],
+    what: "Four kinematic equations relating: s=displacement, u=initial velocity, v=final velocity, a=acceleration, t=time.",
+    when: "Game physics, projectile motion, physics simulations. Anytime you know 3 of the 5 variables.",
+    example: "Ball thrown up at 20m/s, a=−9.8. v=0 at peak → t = 20/9.8 ≈ 2.04s."
+  },
+  {
+    name: "Newton's Second Law",
+    cat: "a-level",
+    keywords: "newton force mass acceleration F=ma mechanics",
+    formula: ["F = ma", "a = F / m"],
+    what: "Force = mass × acceleration. Larger force or smaller mass → more acceleration.",
+    when: "Game physics engines, robotics, simulations, any time objects need realistic movement.",
+    example: "Push 2kg object with 10N → acceleration = 5 m/s²."
+  },
+
+  // STATISTICS
+  {
+    name: "Mean (Average)",
+    cat: "statistics",
+    keywords: "mean average sum divide central tendency mu",
+    formula: ["μ = (Σxᵢ) / n"],
+    what: "The central value of a dataset. Sum everything, divide by count.",
+    when: "Baseline metric for almost everything: avg revenue, avg response time, avg score.",
+    example: "Data: 4,7,2,9 → mean = 22/4 = 5.5."
+  },
+  {
+    name: "Median",
+    cat: "statistics",
+    keywords: "median middle value sorted skewed outlier resistant",
+    formula: ["Sort data → middle value", "Even count → average of middle two"],
+    what: "The middle value. Unlike mean, it's not affected by extreme outliers.",
+    when: "Salary data, house prices, anything where outliers would distort the average.",
+    example: "1, 3, 5, 7, 1000 → median = 5 (not 203)."
+  },
+  {
+    name: "Variance",
+    cat: "statistics",
+    keywords: "variance spread dispersion sigma squared population",
+    formula: ["σ² = Σ(xᵢ − μ)² / n  (population)", "s² = Σ(xᵢ − x̄)² / (n−1)  (sample)"],
+    what: "How spread out the data is. Average of squared deviations from the mean.",
+    when: "Risk measurement in finance, checking how consistent a model's predictions are.",
+    example: "Data: 2,4,4,4,5,5,7,9 → mean=5, variance=4."
+  },
+  {
+    name: "Standard Deviation",
+    cat: "statistics",
+    keywords: "standard deviation sigma spread volatility sigma",
+    formula: ["σ = √(Variance)", "σ = √(Σ(xᵢ − μ)² / n)"],
+    what: "Square root of variance. Back in original units — how much values typically deviate from mean.",
+    when: "Stock volatility, error bars, model uncertainty, quality control thresholds.",
+    example: "σ = 2 means typical value is within ±2 of the mean."
+  },
+  {
+    name: "Z-Score (Standard Score)",
+    cat: "statistics",
+    keywords: "z-score standard score normalized units comparable outlier detection",
+    formula: ["z = (x − μ) / σ"],
+    what: "Converts a value to 'how many standard deviations above/below the mean is it?'",
+    when: "Comparing across different scales, detecting outliers, feature normalization in ML.",
+    example: "x=80, μ=70, σ=5 → z=2. This score is 2 standard deviations above average."
+  },
+  {
+    name: "Pearson Correlation Coefficient",
+    cat: "statistics",
+    keywords: "correlation pearson r relationship linear association",
+    formula: ["r = Σ(xᵢ−x̄)(yᵢ−ȳ) / √[Σ(xᵢ−x̄)² · Σ(yᵢ−ȳ)²]", "r ∈ [−1, +1]"],
+    what: "Measures linear relationship strength. +1 = perfect positive, −1 = perfect negative, 0 = none.",
+    when: "Feature selection in ML, checking if two financial assets move together, A/B test analysis.",
+    example: "r=0.95 between ad spend and revenue → strong positive link."
+  },
+  {
+    name: "Covariance",
+    cat: "statistics",
+    keywords: "covariance joint variability two variables relationship direction",
+    formula: ["Cov(X,Y) = Σ(xᵢ−x̄)(yᵢ−ȳ) / n"],
+    what: "Whether two variables tend to move together (positive) or opposite (negative). Unstandardized.",
+    when: "Portfolio risk (assets moving together), before computing correlation, PCA in ML.",
+    example: "Cov > 0 → when X rises, Y tends to rise too."
+  },
+  {
+    name: "Probability: Basic Rules",
+    cat: "statistics",
+    keywords: "probability chance event complement union intersection",
+    formula: ["P(A) = favourable outcomes / total outcomes", "P(A') = 1 − P(A)", "P(A ∪ B) = P(A) + P(B) − P(A ∩ B)", "P(A ∩ B) = P(A)·P(B)  if independent"],
+    what: "Core rules of probability. P(A') = chance the event does NOT happen.",
+    when: "Risk analysis, game randomness, A/B testing significance, spam filtering.",
+    example: "Die roll: P(even) = 3/6 = 0.5. P(not even) = 0.5."
+  },
+  {
+    name: "Conditional Probability",
+    cat: "statistics",
+    keywords: "conditional probability given P A given B Bayes",
+    formula: ["P(A | B) = P(A ∩ B) / P(B)"],
+    what: "Probability of A, GIVEN that B has already happened. Updates based on new information.",
+    when: "Fraud detection ('transaction is fraud GIVEN it's from unusual location'), recommendation systems.",
+    example: "P(sick | positive test) = P(positive | sick)·P(sick) / P(positive)."
+  },
+  {
+    name: "Bayes' Theorem",
+    cat: "statistics",
+    keywords: "bayes theorem posterior prior likelihood update belief",
+    formula: ["P(A | B) = P(B | A) · P(A) / P(B)"],
+    what: "How to rationally UPDATE your belief about A after observing B. Prior → Posterior.",
+    when: "Spam filters, medical diagnosis, Bayesian ML models, any 'what's the probability given new evidence' question.",
+    example: "Medical test: P(disease|positive) uses test accuracy and base disease rate."
+  },
+  {
+    name: "Expected Value",
+    cat: "statistics",
+    keywords: "expected value mean probability weighted average EV",
+    formula: ["E(X) = Σ [x · P(x)]"],
+    what: "The average outcome you'd get over many repetitions. Weights each outcome by its probability.",
+    when: "Gambling/game design payoff, insurance pricing, decision trees in business, ML loss expectation.",
+    example: "Bet: win $10 (p=0.4) or lose $5 (p=0.6) → E = 10×0.4 + (−5)×0.6 = 1. Good bet!"
+  },
+  {
+    name: "Binomial Distribution",
+    cat: "statistics",
+    keywords: "binomial distribution trials success probability discrete",
+    formula: ["P(X=k) = C(n,k) · pᵏ · (1−p)ⁿ⁻ᵏ", "Mean = np   |   Variance = np(1−p)"],
+    what: "Probability of getting exactly k successes in n independent trials, each with probability p.",
+    when: "Conversion rate analysis (k sales out of n visitors), A/B test outcome modeling, quality control.",
+    example: "Coin 10 flips, k=6 heads: P = C(10,6)·0.5⁶·0.5⁴ ≈ 0.205."
+  },
+  {
+    name: "Poisson Distribution",
+    cat: "statistics",
+    keywords: "poisson distribution rare events rate lambda count",
+    formula: ["P(X=k) = (λᵏ · e⁻λ) / k!", "Mean = λ   |   Variance = λ"],
+    what: "Probability of k events in a fixed interval, when events are rare and independent.",
+    when: "Server crash frequency, customer arrivals per hour, bug count per 1000 lines of code.",
+    example: "λ=3 emails/hour. P(exactly 5) = (3⁵ · e⁻³) / 5! ≈ 0.101."
+  },
+  {
+    name: "Hypothesis Testing: p-value",
+    cat: "statistics",
+    keywords: "p value hypothesis test significance null alternative",
+    formula: ["If p < α (usually 0.05) → reject null hypothesis", "p-value = probability of results as extreme as observed, IF null is true"],
+    what: "Measures how surprising your data is if the null hypothesis were true. Small p → surprising → reject null.",
+    when: "A/B testing, clinical trials, feature impact analysis, any experiment with a yes/no conclusion.",
+    example: "p=0.03, α=0.05 → statistically significant. Your new button does increase clicks."
+  },
+  {
+    name: "Confidence Interval",
+    cat: "statistics",
+    keywords: "confidence interval CI estimate margin error 95%",
+    formula: ["CI = x̄ ± z* · (σ / √n)", "95% CI → z* = 1.96   |   99% CI → z* = 2.576"],
+    what: "A range where the true population mean likely falls. '95% CI' = 95% of such intervals contain the true value.",
+    when: "Reporting ML model accuracy, A/B test result ranges, survey results, financial forecasts.",
+    example: "x̄=50, σ=10, n=100 → 95% CI = 50 ± 1.96 = [48.04, 51.96]."
+  },
+  {
+    name: "Interquartile Range (IQR)",
+    cat: "statistics",
+    keywords: "IQR quartile range outlier box plot spread",
+    formula: ["IQR = Q3 − Q1", "Outlier if: < Q1 − 1.5·IQR  or  > Q3 + 1.5·IQR"],
+    what: "The middle 50% spread of your data. Robust to outliers unlike variance.",
+    when: "Box plots, outlier detection in data cleaning, feature scaling preprocessing for ML.",
+    example: "Q1=20, Q3=50 → IQR=30. Outlier threshold: above 95 or below −25."
+  },
+
+  // MACHINE LEARNING
+  {
+    name: "Sigmoid Function",
+    cat: "machine-learning",
+    keywords: "sigmoid activation logistic function probability output 0 1",
+    formula: ["σ(x) = 1 / (1 + e⁻ˣ)", "Output range: (0, 1)"],
+    what: "Squashes any real number to between 0 and 1. Converts raw scores to probabilities.",
+    when: "Binary classification output layer (is this email spam?), logistic regression.",
+    example: "σ(0) = 0.5. σ(5) ≈ 0.993. σ(−5) ≈ 0.007."
+  },
+  {
+    name: "Softmax Function",
+    cat: "machine-learning",
+    keywords: "softmax activation multi-class probability distribution output layer",
+    formula: ["softmax(xᵢ) = eˣⁱ / Σⱼ eˣʲ", "All outputs sum to 1."],
+    what: "Converts a vector of scores into probabilities that sum to 1. Generalizes sigmoid to multiple classes.",
+    when: "Multi-class classification output (cat vs dog vs bird — which is most likely?).",
+    example: "Scores [2, 1, 0.1] → softmax ≈ [0.659, 0.242, 0.099]."
+  },
+  {
+    name: "ReLU Activation",
+    cat: "machine-learning",
+    keywords: "ReLU activation rectified linear unit hidden layer nonlinear",
+    formula: ["ReLU(x) = max(0, x)", "Leaky ReLU: max(αx, x)  where α ≈ 0.01"],
+    what: "Simple: if x is negative, output 0. Otherwise output x. Adds non-linearity cheaply.",
+    when: "Default hidden-layer activation in most neural networks. Fast to compute, works very well.",
+    example: "ReLU(−5) = 0. ReLU(3.7) = 3.7."
+  },
+  {
+    name: "Gradient Descent Update Rule",
+    cat: "machine-learning",
+    keywords: "gradient descent update learning rate optimize weight parameter",
+    formula: ["θ := θ − α · ∇J(θ)", "θ = parameter, α = learning rate, ∇J = gradient of loss"],
+    what: "How a neural network learns: move each parameter slightly in the direction that reduces error.",
+    when: "Core of ALL neural network training. Run this for every parameter, every training step.",
+    example: "If gradient = +0.5 and α=0.01 → new θ = θ − 0.005. Parameter nudged toward minimum."
+  },
+  {
+    name: "Mean Squared Error (MSE) Loss",
+    cat: "machine-learning",
+    keywords: "MSE loss cost function regression mean squared error",
+    formula: ["MSE = (1/n) · Σ(yᵢ − ŷᵢ)²"],
+    what: "Average of squared differences between predicted and actual values. Penalizes large errors heavily.",
+    when: "Regression problems (predicting a price, temperature, score). Training objective to minimize.",
+    example: "Actual=[3,5], Predicted=[2,6] → MSE = ((1)²+(1)²)/2 = 1."
+  },
+  {
+    name: "Cross-Entropy Loss (Log Loss)",
+    cat: "machine-learning",
+    keywords: "cross entropy loss log loss classification binary multi-class",
+    formula: ["Binary: −[y·log(ŷ) + (1−y)·log(1−ŷ)]", "Multi-class: −Σ yᵢ · log(ŷᵢ)"],
+    what: "Penalizes confident wrong predictions very severely. The go-to loss for classification.",
+    when: "Classification model training. Minimizing this makes the model's probabilities more accurate.",
+    example: "Predict 0.9 for positive (correct) → low loss. Predict 0.1 (wrong) → very high loss."
+  },
+  {
+    name: "Backpropagation (Core Concept)",
+    cat: "machine-learning",
+    keywords: "backpropagation backward pass gradient chain rule neural network",
+    formula: ["δ_output = (ŷ − y) · σ'(z)", "δ_hidden = (Wᵀ · δ_next) · f'(z)", "ΔW = −α · δ · aᵀ"],
+    what: "Algorithm to compute gradients for every weight by propagating error backwards through layers.",
+    when: "Inside every neural network training loop — you never call this manually, but understanding it is critical.",
+    example: "Big error at output → large gradient flows backward → big weight updates in early layers."
+  },
+  {
+    name: "L2 Regularization (Ridge)",
+    cat: "machine-learning",
+    keywords: "L2 regularization ridge penalty weight decay overfitting lambda",
+    formula: ["Loss_total = Loss + λ · Σw²"],
+    what: "Adds a penalty for large weights. Forces model to stay simple, preventing overfitting.",
+    when: "When model performs great on training data but badly on new data (overfitting).",
+    example: "λ=0.01: weight of 5 adds 0.25 to loss, pushing training to keep weights small."
+  },
+  {
+    name: "L1 Regularization (Lasso)",
+    cat: "machine-learning",
+    keywords: "L1 regularization lasso sparsity feature selection penalty",
+    formula: ["Loss_total = Loss + λ · Σ|w|"],
+    what: "Penalizes absolute weight values. Tends to push some weights exactly to zero (feature selection).",
+    when: "When you suspect many features are irrelevant — L1 will zero them out automatically.",
+    example: "Model with 100 features → after L1, only 20 have non-zero weights."
+  },
+  {
+    name: "R² Score (Coefficient of Determination)",
+    cat: "machine-learning",
+    keywords: "R squared r2 score regression goodness fit variance explained",
+    formula: ["R² = 1 − (SS_res / SS_tot)", "SS_res = Σ(yᵢ−ŷᵢ)²  |  SS_tot = Σ(yᵢ−ȳ)²"],
+    what: "How much variance in y is explained by your model. 1 = perfect. 0 = no better than guessing mean.",
+    when: "Evaluating regression models. Tells you if the features you chose are actually predictive.",
+    example: "R²=0.85 → model explains 85% of variance. 0.2 → try different features."
+  },
+  {
+    name: "Precision, Recall, F1 Score",
+    cat: "machine-learning",
+    keywords: "precision recall F1 classification metrics TP FP FN accuracy",
+    formula: ["Precision = TP / (TP + FP)  (of all positives predicted, how many right?)", "Recall    = TP / (TP + FN)  (of all actual positives, how many found?)", "F1        = 2 · (P · R) / (P + R)  (harmonic mean)"],
+    what: "Precision = 'if I say it's spam, am I right?' Recall = 'did I catch all the spam?' F1 = balanced.",
+    when: "Imbalanced datasets (fraud detection, disease prediction) where accuracy alone is misleading.",
+    example: "Spam filter: Precision=0.95 (few false alarms). Recall=0.80 (misses 20% of real spam)."
+  },
+  {
+    name: "Attention Mechanism (Transformers)",
+    cat: "machine-learning",
+    keywords: "attention transformer self-attention query key value QKV",
+    formula: ["Attention(Q,K,V) = softmax( Q·Kᵀ / √dₖ ) · V", "Q=queries, K=keys, V=values, dₖ=key dimension"],
+    what: "Lets the model focus on relevant parts of input when producing each output. Foundation of GPT/BERT.",
+    when: "Understanding how LLMs work. Building transformer models for NLP, vision, or code.",
+    example: "When translating 'bank', attention decides if other words suggest 'river bank' or 'money bank'."
+  },
+  {
+    name: "Cosine Similarity",
+    cat: "machine-learning",
+    keywords: "cosine similarity angle vector similarity NLP embeddings semantic",
+    formula: ["cos(θ) = (A · B) / (|A| · |B|)", "Range: [−1, 1]  →  1 = same direction, 0 = orthogonal"],
+    what: "Measures how similar two vectors are by angle, not magnitude. Direction matters, size doesn't.",
+    when: "Comparing text embeddings, recommendation systems, document similarity, semantic search.",
+    example: "'King' and 'Queen' embeddings → cosine ≈ 0.85 (very similar direction)."
+  },
+  {
+    name: "Euclidean Distance (ML context)",
+    cat: "machine-learning",
+    keywords: "euclidean distance knn clustering feature space",
+    formula: ["d(A,B) = √Σ(Aᵢ − Bᵢ)²"],
+    what: "Straight-line distance between two data points in feature space.",
+    when: "K-Nearest Neighbors (KNN), K-Means clustering, finding similar items.",
+    example: "Point A=(1,2,3), B=(4,6,3) → d = √(9+16+0) = 5."
+  },
+  {
+    name: "Entropy (Information Theory)",
+    cat: "machine-learning",
+    keywords: "entropy information theory uncertainty bits decision tree",
+    formula: ["H(X) = −Σ P(x) · log₂(P(x))"],
+    what: "Measures uncertainty/disorder in a dataset. High entropy = very mixed. Low = mostly one class.",
+    when: "Decision tree splitting criterion, measuring how pure a classification is, feature selection.",
+    example: "50/50 split → H = 1.0 bit (max uncertainty). All one class → H = 0."
+  },
+  {
+    name: "KL Divergence",
+    cat: "machine-learning",
+    keywords: "KL divergence kullback leibler distribution difference relative entropy",
+    formula: ["KL(P ∥ Q) = Σ P(x) · log(P(x) / Q(x))"],
+    what: "How much probability distribution P differs from distribution Q. Asymmetric — KL(P∥Q) ≠ KL(Q∥P).",
+    when: "Variational autoencoders (VAE loss), comparing model output to target distribution.",
+    example: "P = true labels, Q = model predictions → small KL = model is well-calibrated."
+  },
+
+  // CS / ALGORITHMS
+  {
+    name: "Big-O Notation (Complexity)",
+    cat: "cs-algorithms",
+    keywords: "big O complexity time space algorithm performance",
+    formula: ["O(1) → constant  (hash lookup)", "O(log n) → logarithmic  (binary search)", "O(n) → linear  (single loop)", "O(n log n) → (merge sort)", "O(n²) → quadratic  (nested loops)", "O(2ⁿ) → exponential  (brute force)"],
+    what: "Describes how runtime/memory scales as input grows. Lower = better for large inputs.",
+    when: "Choosing algorithms and data structures. Essential for interviews and production code.",
+    example: "Searching 1M items: O(n)=1M ops, O(log n)=20 ops. Big difference."
+  },
+  {
+    name: "Binary Search",
+    cat: "cs-algorithms",
+    keywords: "binary search sorted array divide conquer O log n",
+    formula: ["mid = (low + high) / 2", "Repeat: compare target to arr[mid] → go left or right"],
+    what: "Finds an item in a sorted list by halving the search space each step. O(log n).",
+    when: "Any sorted collection where you need fast lookup. Always prefer over O(n) linear scan.",
+    example: "1M items → binary search takes at most 20 comparisons."
+  },
+  {
+    name: "Hash Function Principle",
+    cat: "cs-algorithms",
+    keywords: "hash function hashmap O(1) lookup key value",
+    formula: ["index = hash(key) % table_size"],
+    what: "Maps any key to a fixed-size index in O(1). Foundation of HashMaps, dictionaries, sets.",
+    when: "Constant-time lookup, counting frequencies, deduplication, caching, database indexing.",
+    example: "hash('username') → slot 42 in array. Lookup without scanning."
+  },
+  {
+    name: "Recursion: Time Complexity (Master Theorem)",
+    cat: "cs-algorithms",
+    keywords: "master theorem recursion divide conquer complexity T(n)",
+    formula: ["T(n) = a·T(n/b) + f(n)", "a = subproblems, b = size reduction, f(n) = merge cost", "Merge sort: T(n) = 2T(n/2) + O(n) → O(n log n)"],
+    what: "Gives time complexity of divide-and-conquer recursive algorithms without solving the recurrence.",
+    when: "Analyzing merge sort, quick sort, binary search, any recursive algorithm that splits input.",
+    example: "T(n)=2T(n/2)+n → merge sort → O(n log n)."
+  },
+  {
+    name: "Graph: BFS / DFS Complexity",
+    cat: "cs-algorithms",
+    keywords: "BFS DFS graph traversal vertices edges complexity",
+    formula: ["Time: O(V + E)  where V=vertices, E=edges", "BFS: queue-based, finds shortest path (unweighted)", "DFS: stack-based, explores deep first"],
+    what: "Two fundamental ways to explore all nodes in a graph.",
+    when: "BFS for shortest path (maps, social networks). DFS for cycle detection, topological sort.",
+    example: "BFS from source → shortest hops to every reachable node."
+  },
+  {
+    name: "Dijkstra's Algorithm Complexity",
+    cat: "cs-algorithms",
+    keywords: "dijkstra shortest path weighted graph priority queue",
+    formula: ["O((V + E) log V)  with binary heap", "Finds shortest path from source to all nodes"],
+    what: "Shortest path in weighted graphs. Greedily expands closest unvisited node.",
+    when: "GPS routing, network packet routing, game AI pathfinding with varied movement costs.",
+    example: "Google Maps uses Dijkstra variants to find fastest driving route."
+  },
+  {
+    name: "Dynamic Programming: Memoization",
+    cat: "cs-algorithms",
+    keywords: "dynamic programming memoization overlapping subproblems optimal",
+    formula: ["memo[n] = result of subproblem(n)", "If memo[n] exists → return cached value", "Fibonacci: O(2ⁿ) → O(n) with memoization"],
+    what: "Cache results of subproblems so you never compute the same thing twice.",
+    when: "Fibonacci, shortest path, knapsack, string edit distance, any problem with overlapping subproblems.",
+    example: "Fib(40) without memo: billions of calls. With memo: 40 calls."
+  },
+  {
+    name: "Bit Manipulation",
+    cat: "cs-algorithms",
+    keywords: "bit manipulation AND OR XOR shift binary flags",
+    formula: ["n & 1 == 0 → even number", "n & (n−1) == 0 → power of 2", "x ^ x = 0  (XOR self)", "x ^ 0 = x  (XOR zero)", "x << k = x × 2ᵏ  (left shift)"],
+    what: "Direct manipulation of binary bits. Extremely fast — single CPU instructions.",
+    when: "Permission flags, hashing, cryptography, competitive programming, embedded systems.",
+    example: "n=8: n&(n−1)=0 → 8 is a power of 2."
+  },
+  {
+    name: "Amortized Analysis",
+    cat: "cs-algorithms",
+    keywords: "amortized analysis average cost dynamic array push pop",
+    formula: ["Amortized cost = Total cost over n operations / n"],
+    what: "Average cost per operation over a sequence, even if some operations are expensive.",
+    when: "Dynamic arrays (occasional resize is O(n) but amortized O(1)), understanding 'average case'.",
+    example: "ArrayList: 99 O(1) inserts + 1 O(n) resize → amortized O(1) per insert."
+  },
+
+  // GAME DEV
+  {
+    name: "Dot Product",
+    cat: "game-dev",
+    keywords: "dot product scalar vectors angle cosine projection game physics",
+    formula: ["A · B = Ax·Bx + Ay·By + Az·Bz", "A · B = |A|·|B|·cos θ", "cos θ = A·B / (|A|·|B|)"],
+    what: "Scalar result from two vectors. Tells you the angle between them and how much they align.",
+    when: "Is enemy in front of player? (dot > 0 = in front), lighting calculations (Lambert shading), checking direction alignment.",
+    example: "A=(1,0), B=(0.7,0.7) → dot=0.7 → θ=45°. Enemy is 45° to the right."
+  },
+  {
+    name: "Cross Product",
+    cat: "game-dev",
+    keywords: "cross product vector perpendicular normal 3d game physics",
+    formula: ["A × B = (AyBz−AzBy, AzBx−AxBz, AxBy−AyBx)", "|A × B| = |A|·|B|·sin θ"],
+    what: "Returns a vector perpendicular to both inputs. Length tells you how parallel they are.",
+    when: "Computing surface normals for lighting, determining rotation direction, torque in physics.",
+    example: "Normal of a triangle face → cross product of two edge vectors."
+  },
+  {
+    name: "Linear Interpolation (Lerp)",
+    cat: "game-dev",
+    keywords: "lerp linear interpolation smooth movement blend animation",
+    formula: ["lerp(a, b, t) = a + t·(b − a)  where t ∈ [0,1]", "t=0 → a  |  t=0.5 → midpoint  |  t=1 → b"],
+    what: "Smoothly blends between two values based on t. The backbone of smooth animation.",
+    when: "Camera follow, UI transitions, color blending, enemy AI movement, smooth camera shake decay.",
+    example: "lerp(0, 100, 0.3) = 30. Moves 30% of the way from 0 to 100."
+  },
+  {
+    name: "Slerp (Spherical Lerp)",
+    cat: "game-dev",
+    keywords: "slerp spherical lerp quaternion rotation interpolation smooth",
+    formula: ["slerp(q₁, q₂, t) = (q₁·sin((1−t)Ω) + q₂·sin(tΩ)) / sin(Ω)", "Ω = angle between quaternions"],
+    what: "Smoothly interpolates between two rotations along the shortest arc. Prevents 'gimbal lock'.",
+    when: "Character head rotation, smooth camera turns, animating between poses.",
+    example: "Rotating from facing-north to facing-east → slerp gives smooth 90° turn."
+  },
+  {
+    name: "2D Rotation Matrix",
+    cat: "game-dev",
+    keywords: "rotation matrix 2d rotate point angle transform",
+    formula: ["x' = x·cos θ − y·sin θ", "y' = x·sin θ + y·cos θ"],
+    what: "Rotates a 2D point by angle θ around the origin.",
+    when: "Rotating sprites, bullet trajectory offsets, any 2D transformation.",
+    example: "Point (1,0) rotated 90° → x'=0·1−1·0=0, y'=1·1+0·0=0 → (0,1). ✓"
+  },
+  {
+    name: "atan2 (Angle from Direction)",
+    cat: "game-dev",
+    keywords: "atan2 angle direction vector two arguments arctangent aim",
+    formula: ["θ = atan2(y, x)", "Returns angle in radians (−π to π)"],
+    what: "Gets the angle of a direction vector. Unlike atan(y/x), handles all four quadrants correctly.",
+    when: "Enemy aiming at player, rotating a sprite to face movement direction, any 'look at' mechanic.",
+    example: "Player at (5,3), enemy at (2,1): dx=3, dy=2 → angle = atan2(2,3) ≈ 33.7°."
+  },
+  {
+    name: "AABB Collision Detection",
+    cat: "game-dev",
+    keywords: "AABB axis aligned bounding box collision rectangle overlap",
+    formula: ["No collision if: A.right < B.left OR A.left > B.right", "           OR: A.bottom < B.top OR A.top > B.bottom"],
+    what: "Fastest way to check if two rectangles (axis-aligned boxes) overlap.",
+    when: "Most 2D game collision detection. Broad-phase check before expensive narrow-phase.",
+    example: "Two boxes: if all four conditions are false → they're overlapping → collision!"
+  },
+  {
+    name: "Circle Collision Detection",
+    cat: "game-dev",
+    keywords: "circle collision detection radius distance overlap spheres",
+    formula: ["d² = (x₂−x₁)² + (y₂−y₁)²", "Collision if: d² < (r₁ + r₂)²"],
+    what: "Check if two circles overlap by comparing centre distance to sum of radii.",
+    when: "Bullet hits, ball physics, character hitboxes, explosion radius checks.",
+    example: "Circle A at (0,0) r=3, B at (4,0) r=2 → d²=16, (3+2)²=25 → 16<25 → collision!"
+  },
+  {
+    name: "Projectile Motion",
+    cat: "game-dev",
+    keywords: "projectile motion trajectory arc angle velocity gravity",
+    formula: ["x(t) = v₀·cos(θ)·t", "y(t) = v₀·sin(θ)·t − ½g·t²", "Max range: R = v₀²·sin(2θ) / g"],
+    what: "Path of an object launched at angle θ with speed v₀ under gravity g.",
+    when: "Bullets, grenades, jumping arcs, angry bird style physics, sports simulations.",
+    example: "45° launch → maximum horizontal range for a given speed."
+  },
+  {
+    name: "Frame-Rate Independent Movement (Delta Time)",
+    cat: "game-dev",
+    keywords: "delta time frame rate independent movement dt timestep",
+    formula: ["position += velocity × deltaTime", "deltaTime = time since last frame (in seconds)"],
+    what: "Makes movement speed consistent regardless of frame rate (30fps vs 144fps).",
+    when: "ALWAYS use this for any moving game object. Critical for cross-platform fairness.",
+    example: "speed=100 units/s. At 60fps: dt=0.016 → move 1.6 units/frame. Consistent."
+  },
+  {
+    name: "Easing Functions",
+    cat: "game-dev",
+    keywords: "easing ease in out animation smooth cubic lerp tweening",
+    formula: ["Ease In  (quadratic): t²", "Ease Out (quadratic): t(2−t)", "Ease In-Out: t<0.5 ? 2t² : −1+(4−2t)t", "Smooth Step: 3t²−2t³"],
+    what: "Non-linear interpolation that starts/ends fast or slow for natural-feeling animation.",
+    when: "UI animations, camera movements, character spawning — anything that should feel non-robotic.",
+    example: "Object sliding in: ease-out makes it zoom in fast and gently stop."
+  },
+
+  // FINANCE / FINTECH
+  {
+    name: "Simple Interest",
+    cat: "finance",
+    keywords: "simple interest principal rate time loan",
+    formula: ["I = P × r × t", "P=principal, r=annual rate (decimal), t=years"],
+    what: "Interest calculated only on original principal. Doesn't compound.",
+    when: "Short-term loans, basic return estimates, O-level finance problems.",
+    example: "$1000 at 5% for 3 years → I = 1000×0.05×3 = $150."
+  },
+  {
+    name: "Compound Interest",
+    cat: "finance",
+    keywords: "compound interest growth exponential APY investment",
+    formula: ["A = P · (1 + r/n)^(n·t)", "P=principal, r=annual rate, n=compounds/year, t=years"],
+    what: "Interest on interest. Your returns generate their own returns — exponential growth.",
+    when: "Savings accounts, investment projections, crypto staking, any interest that compounds.",
+    example: "$1000 at 6% compounded monthly for 10y → A = 1000·(1+0.005)^120 ≈ $1819."
+  },
+  {
+    name: "Continuous Compounding",
+    cat: "finance",
+    keywords: "continuous compound euler e natural constant growth rate",
+    formula: ["A = P · eʳᵗ", "e ≈ 2.71828  (Euler's number)"],
+    what: "The theoretical limit of compounding — compounding every infinitesimal instant.",
+    when: "Options pricing (Black-Scholes), theoretical finance, DeFi calculations.",
+    example: "$1000 at 5% continuously for 2y → A = 1000·e^0.1 ≈ $1105."
+  },
+  {
+    name: "Present Value (PV) / Future Value (FV)",
+    cat: "finance",
+    keywords: "present value future value discounting time money NPV DCF",
+    formula: ["FV = PV · (1 + r)ⁿ", "PV = FV / (1 + r)ⁿ"],
+    what: "Money today is worth more than money later. PV discounts future cash to today's worth.",
+    when: "Startup valuation, comparing investment options, fintech product pricing, loan analysis.",
+    example: "Receive $1000 in 3y, r=10% → PV = 1000/1.1³ ≈ $751 today."
+  },
+  {
+    name: "Net Present Value (NPV)",
+    cat: "finance",
+    keywords: "NPV net present value cash flow discount rate investment decision",
+    formula: ["NPV = Σ Cₜ/(1+r)ᵗ − C₀", "Cₜ = cash flow at time t, r = discount rate, C₀ = initial cost"],
+    what: "Total value of a project in today's money. Positive NPV = good investment.",
+    when: "Should we build this feature? Is this startup fundable? Capital budgeting decisions.",
+    example: "Project costs $100K, returns $40K/yr for 3y at r=10% → NPV = −100K + 40K/(1.1) + … "
+  },
+  {
+    name: "CAGR (Compound Annual Growth Rate)",
+    cat: "finance",
+    keywords: "CAGR growth rate annual compound investment return",
+    formula: ["CAGR = (End Value / Start Value)^(1/years) − 1"],
+    what: "The steady annual growth rate that gets you from start to end value over the period.",
+    when: "Comparing investment performance, reporting business growth, startup metrics.",
+    example: "$100 → $200 in 5 years → CAGR = (2)^(1/5) − 1 ≈ 14.87% per year."
+  },
+  {
+    name: "Rule of 72",
+    cat: "finance",
+    keywords: "rule of 72 double time years interest rate quick estimate",
+    formula: ["Years to double ≈ 72 / annual_rate%"],
+    what: "Quick mental math: how long until your investment doubles?",
+    when: "Fast back-of-envelope estimates at meetings, comparing interest rate offers.",
+    example: "6% interest → 72/6 = 12 years to double your money."
+  },
+  {
+    name: "Sharpe Ratio",
+    cat: "finance",
+    keywords: "Sharpe ratio risk adjusted return portfolio performance",
+    formula: ["Sharpe = (Rₚ − Rƒ) / σₚ", "Rₚ=portfolio return, Rƒ=risk-free rate, σₚ=portfolio std dev"],
+    what: "Return per unit of risk. Higher is better. Compares portfolios fairly regardless of risk level.",
+    when: "Evaluating a trading strategy or investment fund. Is the extra risk worth the extra return?",
+    example: "Portfolio: 15% return, 5% risk-free, σ=10% → Sharpe = (15−5)/10 = 1.0. Decent."
+  },
+  {
+    name: "Capital Asset Pricing Model (CAPM)",
+    cat: "finance",
+    keywords: "CAPM capital asset pricing model expected return beta market risk premium",
+    formula: ["E(R) = Rƒ + β · (Rₘ − Rƒ)", "Rƒ=risk-free rate, β=beta, Rₘ=market return"],
+    what: "Expected return of an asset based on its market risk (beta). More risk → higher required return.",
+    when: "Stock valuation, cost of equity, judging if a stock is over/undervalued.",
+    example: "Rƒ=3%, β=1.5, Rₘ=8% → E(R) = 3 + 1.5×5 = 10.5% expected return."
+  },
+  {
+    name: "Beta (Market Sensitivity)",
+    cat: "finance",
+    keywords: "beta market risk volatility covariance correlation stock",
+    formula: ["β = Cov(asset, market) / Var(market)"],
+    what: "How much an asset moves when the market moves. β=1 = moves with market. β>1 = amplified.",
+    when: "Portfolio construction, risk assessment, choosing stocks during volatility.",
+    example: "β=2.0 → if market drops 10%, this stock typically drops 20%."
+  },
+  {
+    name: "Loan Monthly Payment",
+    cat: "finance",
+    keywords: "loan mortgage monthly payment amortization installment EMI",
+    formula: ["M = P · [r(1+r)ⁿ] / [(1+r)ⁿ − 1]", "P=loan amount, r=monthly rate, n=number of months"],
+    what: "Fixed monthly payment on a loan that pays off both principal and interest.",
+    when: "Building a loan calculator fintech app, mortgage calculation, EMI calculation.",
+    example: "$10000 loan, 6%/yr (0.5%/mo), 24mo → M = 10000·[0.005·1.005²⁴]/(1.005²⁴−1) ≈ $443."
+  },
+  {
+    name: "Price-to-Earnings Ratio (P/E)",
+    cat: "finance",
+    keywords: "P/E ratio price earnings valuation stock market",
+    formula: ["P/E = Stock Price / Earnings Per Share (EPS)", "EPS = Net Income / Shares Outstanding"],
+    what: "How much investors pay per dollar of earnings. High P/E = growth expected. Low = cheap or struggling.",
+    when: "Stock valuation, comparing companies in the same sector, growth vs value investing.",
+    example: "Stock at $50, EPS=$5 → P/E=10. Pay $10 for every $1 of annual earnings."
+  },
+  {
+    name: "Return on Investment (ROI)",
+    cat: "finance",
+    keywords: "ROI return investment gain profit ratio percent",
+    formula: ["ROI = (Net Profit / Cost of Investment) × 100%"],
+    what: "Percentage return earned on an investment. Simple, universal profitability metric.",
+    when: "Evaluating any business decision: marketing spend, app features, stock trades.",
+    example: "Spent $500 on ads, earned $800 → ROI = (300/500)×100 = 60%."
+  },
+  {
+    name: "Break-Even Point",
+    cat: "finance",
+    keywords: "break even point fixed variable cost revenue profit zero",
+    formula: ["Break-even units = Fixed Costs / (Price − Variable Cost per unit)"],
+    what: "How many units you must sell to cover all costs and reach zero profit/loss.",
+    when: "Pricing strategy, startup viability, product launch decisions.",
+    example: "Fixed=$10000, Price=$50, Variable=$30 → Break-even = 10000/20 = 500 units."
+  },
+  {
+    name: "Black-Scholes (Options Pricing) — Concept",
+    cat: "finance",
+    keywords: "black scholes option pricing model call put derivative volatility",
+    formula: ["C = S·N(d₁) − K·e^(−rT)·N(d₂)", "d₁ = [ln(S/K) + (r+σ²/2)T] / (σ√T)", "d₂ = d₁ − σ√T"],
+    what: "Price of a European call option. S=stock price, K=strike, r=rate, σ=volatility, T=time to expiry.",
+    when: "Options trading platforms, fintech derivatives pricing, understanding market risk.",
+    example: "Higher volatility (σ) → higher option price. More uncertainty = options more valuable."
+  },
+
+  // UNIVERSITY CS / ENGINEERING
+  {
+    name: "Fourier Transform",
+    cat: "university-cs",
+    keywords: "fourier transform frequency domain signal processing DFT FFT",
+    formula: ["F(ω) = ∫ f(t) · e^(−iωt) dt  (continuous)", "Discrete: F[k] = Σ f[n] · e^(−i2πkn/N)"],
+    what: "Decomposes any signal into its component frequencies. Time domain → Frequency domain.",
+    when: "Audio processing (equalizers), image compression (JPEG), filtering noise, ML on time-series.",
+    example: "Play a guitar note → FFT shows you which frequencies (pitches) are present."
+  },
+  {
+    name: "Euler's Formula",
+    cat: "university-cs",
+    keywords: "euler formula complex number exponential polar rotation",
+    formula: ["e^(iθ) = cos θ + i·sin θ", "e^(iπ) + 1 = 0  (Euler's Identity)"],
+    what: "Links exponential, trigonometric, and complex numbers. Rotations in the complex plane.",
+    when: "Signal processing, Fourier analysis, control systems, AC circuit analysis.",
+    example: "Rotating a complex number by θ = multiplying by e^(iθ)."
+  },
+  {
+    name: "Matrix Multiplication",
+    cat: "university-cs",
+    keywords: "matrix multiplication linear algebra transform neural network layer",
+    formula: ["(AB)ᵢⱼ = Σₖ Aᵢₖ · Bₖⱼ", "A: (m×n), B: (n×p) → AB: (m×p)"],
+    what: "Combines two matrices. The fundamental operation in linear transformations and neural networks.",
+    when: "Neural network forward pass (z = Wx + b), graphics transformations, solving linear systems.",
+    example: "Layer with 100 neurons on 50 inputs: W is 100×50 matrix. One multiply = full layer."
+  },
+  {
+    name: "Eigenvalues & Eigenvectors",
+    cat: "university-cs",
+    keywords: "eigenvalue eigenvector PCA dimensionality reduction matrix",
+    formula: ["Av = λv", "A = matrix, v = eigenvector, λ = eigenvalue", "det(A − λI) = 0  to find λ"],
+    what: "Special vectors that only scale (not rotate) when a matrix acts on them. λ is the scale factor.",
+    when: "PCA (dimensionality reduction), Google PageRank, stability analysis, quantum computing.",
+    example: "PCA: eigenvectors = principal components. Eigenvalues = how much variance each explains."
+  },
+  {
+    name: "Gradient (Multivariable Calculus)",
+    cat: "university-cs",
+    keywords: "gradient partial derivative multivariable vector field direction",
+    formula: ["∇f = (∂f/∂x, ∂f/∂y, ∂f/∂z, …)", "Points in direction of steepest ascent"],
+    what: "The multivariable generalization of a derivative. A vector pointing uphill on the loss surface.",
+    when: "Gradient descent in ML uses the NEGATIVE gradient to go downhill (minimize loss).",
+    example: "f(x,y)=x²+y² → ∇f=(2x,2y). At (3,4) → gradient=(6,8) points toward higher values."
+  },
+  {
+    name: "Taylor Series",
+    cat: "university-cs",
+    keywords: "taylor series expansion approximation polynomial smooth function",
+    formula: ["f(x) ≈ f(a) + f'(a)(x−a) + f''(a)(x−a)²/2! + …", "e^x ≈ 1 + x + x²/2! + x³/3! + …"],
+    what: "Approximates any smooth function as a polynomial. More terms = more accurate.",
+    when: "Numerical methods, physics simulations, ML activations (approximating softmax), signal processing.",
+    example: "sin(x) ≈ x − x³/6 for small x. Handy for fast computation."
+  },
+  {
+    name: "Convolution",
+    cat: "university-cs",
+    keywords: "convolution CNN image processing kernel filter signal",
+    formula: ["(f * g)(t) = ∫ f(τ)·g(t−τ) dτ", "Discrete: (f*g)[n] = Σ f[k]·g[n−k]"],
+    what: "Sliding one function over another and measuring overlap at each point.",
+    when: "CNN image filters (blurring, edge detection), signal processing, audio effects.",
+    example: "3×3 edge-detection kernel convolved over an image → highlights edges."
+  },
+  {
+    name: "Bayes Network / Markov Property",
+    cat: "university-cs",
+    keywords: "markov chain property future past present state transition",
+    formula: ["P(Xₙ₊₁ | X₁,…,Xₙ) = P(Xₙ₊₁ | Xₙ)", "Future depends only on present state, not history."],
+    what: "Future state depends only on the current state, not the full history.",
+    when: "Reinforcement learning (RL assumes Markov property), language models, recommendation engines.",
+    example: "Chess: next best move depends only on current board, not how you got there."
+  },
+  {
+    name: "Shannon's Information Content",
+    cat: "university-cs",
+    keywords: "shannon information content bits entropy probability event",
+    formula: ["I(x) = −log₂(P(x))  bits", "Rare event → high information content"],
+    what: "How surprising/informative an event is. Rare events carry more information.",
+    when: "Data compression, encoding efficiency, understanding why entropy matters in ML.",
+    example: "Coin flip (p=0.5): I = 1 bit. 1-in-1000 event: I = log₂(1000) ≈ 10 bits."
+  },
+
+  // UNIVERSITY BBA / ECON / MBA
+  {
+    name: "Supply & Demand Equilibrium",
+    cat: "university-bba",
+    keywords: "supply demand equilibrium price quantity market",
+    formula: ["Equilibrium: Qd = Qs", "P* = price where quantity demanded = quantity supplied"],
+    what: "Market price settles where buyers and sellers agree — neither excess supply nor demand.",
+    when: "Pricing strategy, understanding market disruptions, product launch pricing.",
+    example: "If supply drops (e.g. chip shortage) → Qs < Qd → price rises until new equilibrium."
+  },
+  {
+    name: "Price Elasticity of Demand",
+    cat: "university-bba",
+    keywords: "price elasticity demand PED quantity price sensitivity",
+    formula: ["PED = (% change in Qd) / (% change in P)", "|PED| > 1 = elastic (sensitive)", "|PED| < 1 = inelastic (insensitive)"],
+    what: "How much demand changes when price changes. Elastic = big reaction. Inelastic = small reaction.",
+    when: "Pricing strategy, predicting revenue impact of price changes, monopoly pricing.",
+    example: "Insulin: inelastic (people buy regardless of price). Luxury bags: elastic."
+  },
+  {
+    name: "GDP Calculation",
+    cat: "university-bba",
+    keywords: "GDP gross domestic product expenditure approach income output",
+    formula: ["GDP = C + I + G + (X − M)", "C=consumption, I=investment, G=govt spending, X=exports, M=imports"],
+    what: "Total economic output of a country in a period.",
+    when: "Macroeconomics, country risk assessment, understanding market size for fintech expansion.",
+    example: "Exports spike → (X−M) rises → GDP increases."
+  },
+  {
+    name: "Inflation: CPI",
+    cat: "university-bba",
+    keywords: "inflation CPI consumer price index purchasing power basket",
+    formula: ["CPI = (Cost of basket in current year / Cost of basket in base year) × 100", "Inflation rate = (CPI_now − CPI_prev) / CPI_prev × 100%"],
+    what: "Measures how much prices have risen compared to a base period.",
+    when: "Salary negotiations, monetary policy understanding, adjusting financial models for inflation.",
+    example: "CPI last year=100, this year=107 → inflation rate = 7%."
+  },
+  {
+    name: "Marginal Cost & Marginal Revenue",
+    cat: "university-bba",
+    keywords: "marginal cost revenue profit maximization MC MR",
+    formula: ["MC = ΔTC / ΔQ  (change in total cost per extra unit)", "MR = ΔTR / ΔQ  (change in total revenue)", "Profit max when: MR = MC"],
+    what: "Marginal = the cost/revenue of producing ONE more unit. Firms maximize profit where MC=MR.",
+    when: "Pricing SaaS tiers, production decisions, understanding monopoly pricing.",
+    example: "Producing 10th unit costs $30 and earns $30 revenue → at the profit-maximizing point."
+  },
+  {
+    name: "Time Value of Money (TVM)",
+    cat: "university-bba",
+    keywords: "time value money present future value annuity perpetuity",
+    formula: ["PV = FV / (1+r)ⁿ", "Annuity PV = PMT × [1 − (1+r)^(−n)] / r", "Perpetuity PV = PMT / r"],
+    what: "Money now is worth more than later due to earning potential. Foundation of all finance.",
+    when: "Valuing businesses, pricing bonds, calculating pension values, startup fundraising.",
+    example: "Perpetuity paying $100/yr at r=5% → PV = 100/0.05 = $2000."
+  },
+  {
+    name: "WACC (Weighted Average Cost of Capital)",
+    cat: "university-bba",
+    keywords: "WACC weighted average cost capital debt equity discount rate",
+    formula: ["WACC = (E/V)·Rₑ + (D/V)·Rᵈ·(1−Tax)", "E=equity value, D=debt value, V=E+D"],
+    what: "The average rate a company must earn on investments to satisfy all capital providers.",
+    when: "DCF valuation (as the discount rate), investment decisions, mergers & acquisitions.",
+    example: "50% equity at 12%, 50% debt at 6%, tax=30% → WACC = 6% + 2.1% = 8.1%."
+  },
+  {
+    name: "Internal Rate of Return (IRR)",
+    cat: "university-bba",
+    keywords: "IRR internal rate return NPV zero investment decision",
+    formula: ["Find r such that: Σ Cₜ/(1+r)ᵗ − C₀ = 0", "If IRR > cost of capital → invest"],
+    what: "The discount rate at which NPV = 0. Higher IRR = better investment.",
+    when: "Comparing investment projects, startup fundraising (investors want IRR > hurdle rate).",
+    example: "Project IRR=18%, company WACC=10% → green light. IRR=7% → reject."
+  },
+
+  // CRYPTO / SECURITY MATH
+  {
+    name: "Modular Arithmetic",
+    cat: "crypto",
+    keywords: "modular arithmetic mod remainder clock wrap around cryptography",
+    formula: ["a mod n = remainder when a ÷ n", "17 mod 5 = 2", "(a + b) mod n = ((a mod n) + (b mod n)) mod n"],
+    what: "Arithmetic that wraps around at n — like a clock wrapping at 12.",
+    when: "Foundation of ALL cryptography. Hash functions, RSA, Diffie-Hellman all rely on this.",
+    example: "Clock: 10 + 5 = 15 → 15 mod 12 = 3. It's 3 o'clock."
+  },
+  {
+    name: "RSA Encryption",
+    cat: "crypto",
+    keywords: "RSA encryption public key private key asymmetric cryptography",
+    formula: ["Encrypt: C = Mᵉ mod n", "Decrypt: M = Cᵈ mod n", "n = p·q  (two large primes)", "e·d ≡ 1 mod φ(n)  (key relationship)"],
+    what: "Public-key encryption. Encrypt with public key (e,n), only private key (d,n) can decrypt.",
+    when: "HTTPS, SSH, digital signatures, secure messaging. Understanding why factoring large numbers is hard.",
+    example: "Your browser uses RSA to establish a secure connection with websites."
+  },
+  {
+    name: "Diffie-Hellman Key Exchange",
+    cat: "crypto",
+    keywords: "Diffie-Hellman key exchange discrete logarithm shared secret",
+    formula: ["Alice sends: A = gᵃ mod p", "Bob sends:   B = gᵇ mod p", "Shared secret: S = Bᵃ mod p = Aᵇ mod p = gᵃᵇ mod p"],
+    what: "Two parties derive the same shared secret without ever transmitting the secret.",
+    when: "TLS/HTTPS handshake, VPNs, end-to-end encrypted apps (WhatsApp, Signal).",
+    example: "Alice and Bob agree on a color via public channel without revealing their secret colors."
+  },
+  {
+    name: "Elliptic Curve Cryptography (ECC)",
+    cat: "crypto",
+    keywords: "elliptic curve ECC Bitcoin ECDSA secp256k1 point multiplication",
+    formula: ["Curve: y² = x³ + ax + b  (mod p)", "Public key Q = k·G  (private key k, generator point G)", "ECDLP: finding k from Q is computationally infeasible"],
+    what: "Crypto based on algebraic elliptic curves. Same security as RSA with much smaller keys.",
+    when: "Bitcoin/Ethereum wallets, TLS 1.3, any modern asymmetric cryptography.",
+    example: "Bitcoin uses secp256k1 curve. Your wallet private key → public address via k·G."
+  },
+  {
+    name: "Cryptographic Hash Functions",
+    cat: "crypto",
+    keywords: "hash SHA256 SHA3 one-way function preimage collision",
+    formula: ["H(x) → fixed-length digest", "Properties: deterministic, one-way, avalanche effect", "SHA-256: 256-bit output"],
+    what: "One-way function: easy to compute H(x), computationally impossible to reverse or find collision.",
+    when: "Password storage, blockchain proof-of-work, file integrity checking, digital signatures.",
+    example: "SHA-256('hello') → always same 64-char hex. Change one letter → completely different hash."
+  },
+  {
+    name: "Merkle Trees",
+    cat: "crypto",
+    keywords: "merkle tree hash tree blockchain bitcoin verification data structure",
+    formula: ["Leaf nodes = H(data)", "Parent = H(left_child + right_child)", "Root = single hash summarizing all data"],
+    what: "Tree of hashes where each parent hashes its children. Any data change bubbles up to root.",
+    when: "Bitcoin/Ethereum block verification, P2P file sharing integrity, distributed databases.",
+    example: "Bitcoin block: 2000 transactions → Merkle root proves all without re-hashing all."
+  },
+  {
+    name: "Proof of Work (PoW)",
+    cat: "crypto",
+    keywords: "proof of work mining hash difficulty nonce Bitcoin",
+    formula: ["Find nonce: H(block_header + nonce) < target", "target = 2^(256−difficulty)", "Lower target = harder puzzle"],
+    what: "Miners must find a nonce that makes the block hash below a target. Requires brute-force work.",
+    when: "Understanding Bitcoin mining, energy cost of crypto, 51% attack risk analysis.",
+    example: "Bitcoin: find nonce so SHA-256(SHA-256(header)) starts with ~19 zeros."
+  },
+  {
+    name: "XOR in Cryptography",
+    cat: "crypto",
+    keywords: "XOR exclusive or encryption key stream cipher one time pad",
+    formula: ["A XOR B XOR B = A  (self-inverse)", "Encrypt: C = P XOR K", "Decrypt: P = C XOR K"],
+    what: "XOR with the same key twice returns the original. Foundation of stream ciphers and OTP.",
+    when: "Stream ciphers, one-time pads, simple obfuscation, understanding AES internals.",
+    example: "If K is truly random and never reused (OTP) → provably unbreakable encryption."
+  },
+  {
+    name: "Digital Signatures (ECDSA)",
+    cat: "crypto",
+    keywords: "digital signature ECDSA sign verify authentication non-repudiation",
+    formula: ["Sign:   (r, s) = sign(private_key, message_hash)", "Verify: valid = verify(public_key, message_hash, r, s)", "Security: impossible to forge without private key"],
+    what: "Proves a message was created by the holder of a private key, and wasn't tampered with.",
+    when: "Blockchain transactions, code signing, email signing, JWT tokens, TLS certificates.",
+    example: "Bitcoin transaction: only owner of private key can produce valid signature to spend coins."
+  },
+
+];
+
+// ==============
+// RENDER ENGINE
+// ==============
+
+const grid = document.getElementById('grid');
+const searchInput = document.getElementById('search');
+const filterBtns = document.querySelectorAll('.filter-btn');
+const statsBar = document.getElementById('stats-bar');
+const noResults = document.getElementById('no-results');
+
+let activeCategory = 'all';
+let searchQuery = '';
+
+/** Map category key → display label */
+const CAT_LABELS = {
+  'core-math':       'Core Math',
+  'a-level':         'A/O-Level',
+  'statistics':      'Statistics',
+  'machine-learning':'ML / AI',
+  'cs-algorithms':   'CS / Algo',
+  'game-dev':        'Game Dev',
+  'finance':         'Finance',
+  'university-cs':   'Uni CS/Eng',
+  'university-bba':  'Uni BBA/Econ',
+  'crypto':          'Crypto',
+};
+
+/** Build all cards once into DOM */
+function buildCards() {
+  FORMULAS.forEach((f, i) => {
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.dataset.cat = f.cat;
+    card.dataset.search = [
+      f.name, f.cat, f.keywords || '',
+      f.what, f.when, (f.example || '')
+    ].join(' ').toLowerCase();
+
+    const formulaLines = f.formula.map((line, idx) =>
+      `<span class="formula-line">${escHtml(line)}</span>`
+    ).join('');
+
+    const exampleHtml = f.example
+      ? `<div class="example-box">💡 ${escHtml(f.example)}</div>`
+      : '';
+
+    card.innerHTML = `
+      <div class="card-top">
+        <span class="card-name">${escHtml(f.name)}</span>
+        <span class="cat-badge">${escHtml(CAT_LABELS[f.cat] || f.cat)}</span>
+      </div>
+      <div class="formula-box">${formulaLines}</div>
+      <div class="desc-section">
+        <span class="desc-label">What it is</span>
+        <p class="desc-text">${escHtml(f.what)}</p>
+      </div>
+      <div class="desc-section">
+        <span class="desc-label">When to use it</span>
+        <p class="desc-text">${escHtml(f.when)}</p>
+      </div>
+      ${exampleHtml}
+    `;
+
+    grid.appendChild(card);
+  });
+}
+
+/** Escape HTML */
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+/** Filter cards based on current category + search */
+function applyFilters() {
+  const cards = grid.querySelectorAll('.card');
+  let visible = 0;
+
+  cards.forEach(card => {
+    const matchesCat = activeCategory === 'all' || card.dataset.cat === activeCategory;
+    const matchesSearch = !searchQuery || card.dataset.search.includes(searchQuery);
+    const show = matchesCat && matchesSearch;
+    card.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+
+  noResults.style.display = visible === 0 ? 'block' : 'none';
+  updateStats(visible);
+}
+
+/** Update stats bar */
+function updateStats(visible) {
+  const total = FORMULAS.length;
+  const catLabel = activeCategory === 'all' ? 'all categories' : CAT_LABELS[activeCategory] || activeCategory;
+  
+  statsBar.textContent = `Showing ${visible} of ${total} formulas · ${catLabel}`;
+  
+  if (searchQuery) {
+    statsBar.textContent += ` · search: "${searchQuery}"`;
+  }
+}
+
+/** Debounce helper */
+function debounce(fn, ms) {
+  let t;
+  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+
+// EVENT LISTENERS
+const clearBtn = document.getElementById('search-clear');
+
+searchInput.addEventListener('input', debounce(() => {
+  searchQuery = searchInput.value.trim().toLowerCase();
+  clearBtn.style.display = searchQuery ? 'block' : 'none'; 
+  applyFilters();
+}, 120));
+
+clearBtn.addEventListener('click', () => {
+  searchInput.value = '';
+  searchQuery = '';
+  clearBtn.style.display = 'none';
+  searchInput.focus();
+  applyFilters();
+});
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeCategory = btn.dataset.cat;
+    applyFilters();
+  });
+});
+
+// INIT 
+buildCards();
+applyFilters();
+</script>
+</body>
+</html>
