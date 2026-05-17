@@ -163,13 +163,18 @@ Planned ideas:
 
 ## License
 
-MIT License
+CC BY-NC-ND 4.0 License
+
+---
+## Attribution
+
+This project is open-source, but the educational explanations and plain-English translations are my original work. If you use this for teaching, please retain the original author links.
 
 ---
 
 ## Author
 
-Built by YOUR NAME
+Built by TAHMINA SADIA MAHMUD RODSHI
 
 GitHub:
-https://github.com/YOUR_USERNAME/formula-universe
+https://github.com/tsmio/formula-universe
