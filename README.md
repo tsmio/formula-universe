@@ -1,5 +1,5 @@
 # Formula Universe
-
+## 🚀 [View the Live App Here!](https://tsmio.github.io/formula-universe/)
 An interactive offline-first formula reference built for students, engineers, developers, analysts, and educators.
 
 Designed to answer three questions instantly:
